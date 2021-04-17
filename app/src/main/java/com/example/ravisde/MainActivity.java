@@ -6,6 +6,7 @@ import androidx.room.Room;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -75,7 +76,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+        refreshData();
     }
+
     private void updateList()
     {
         if(responseData==null)
@@ -104,6 +107,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void refreshData()
     {
+//        15 minutes delay refresh
+        new android.os.Handler(Looper.getMainLooper()).postDelayed(
+                new Runnable() {
+                    public void run() {
+                        refreshData();
+                    }
+                },
+                15*60*1000);
 
         progressBar.setVisibility(View.VISIBLE);
 // Instantiate the RequestQueue.
@@ -295,13 +306,17 @@ public class MainActivity extends AppCompatActivity {
         {
             String text="";
             String bb="";
-                    for(int i=0;i<this.builtBy.size();i++)
-                    {
-                        bb.concat(builtBy.get(i)+",    ");
-                    }
+            for(BuiltBy maker:this.builtBy)
+            {
+//                Log.e("maker of ",maker.username+bb.length());
+                bb=bb.concat(maker.username);
+                bb=bb.concat(",  ");
+            }
             text="Description= "+this.description+"\n"+"\n"+
                     "language= "+this.language+"\n"+"\n"+
-                    "buitl by= " +bb;
+                    "built by= " ;
+            text =text.concat(bb);
+//            Log.e("bb is ",bb);
             return text;
         }
     }

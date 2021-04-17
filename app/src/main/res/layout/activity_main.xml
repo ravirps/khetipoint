@@ -35,12 +35,12 @@
             android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Swipe to redsfresh"
+            android:text="Swipe to refresh"
 
             />
             <ListView
                 android:id = "@+id/list"
-                android:layout_width = "wrap_content"
+                android:layout_width = "match_parent"
                 android:layout_height = "match_parent"
                 android:divider = "#000"
                 android:dividerHeight = "1dp"
