@@ -49,11 +49,15 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
 //                        textView.setText("Response is: "+ response.substring(0,500));
-                        userDao.insertAll(new User(response));
+
                         List<User> users = userDao.getAll();
-                        if(users.size()>0)
-                        textView.setText(users.get(0).data);
-                        else textView.setText("empty list");
+                        if(users!=null)userDao.delete(users.get(0));
+                        User curr=new User();
+                        curr.data=response;
+                        curr.uid=1;
+                        userDao.insertAll(curr);
+                        users = userDao.getAll();
+                        textView.setText(users.get(0).data); 
                     }
                 }, new Response.ErrorListener() {
             @Override
