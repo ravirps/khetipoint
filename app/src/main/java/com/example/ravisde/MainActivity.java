@@ -20,7 +20,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 
@@ -45,8 +51,7 @@ public class MainActivity extends AppCompatActivity {
         userDao = dbclient.getAppDatabase().userDao();
         progressBar=findViewById(R.id.progress_circular);
         errorImage=findViewById(R.id.errorImage);
-
-        ListView list = findViewById(R.id.list);
+        list = findViewById(R.id.list);
 //
         textView = findViewById(R.id.text);
 // ...
@@ -80,9 +85,20 @@ public class MainActivity extends AppCompatActivity {
         }
         progressBar.setVisibility(View.GONE);
         errorImage.setVisibility(View.GONE);
-        textView.setVisibility(View.VISIBLE);
+//        textView.setVisibility(View.VISIBLE);
+//
+//        textView.setText(responseData);
+        list = findViewById(R.id.list);
 
-        textView.setText(responseData);
+        Gson gson = new Gson();
+
+        Type userListType = new TypeToken<ArrayList<Root>>(){}.getType();
+
+        ArrayList<Root> rootArray = gson.fromJson(responseData, userListType);
+        CustomAdapter customAdapter = new CustomAdapter(this, rootArray);
+        list.setAdapter(customAdapter);
+
+
 //        Log.e("upadting",responseData);
     }
 
@@ -137,9 +153,143 @@ public class MainActivity extends AppCompatActivity {
     void showError()
     {
         progressBar.setVisibility(View.GONE);
-        textView.setVisibility(View.GONE);
+        list.setVisibility(View.GONE);
 
         errorImage.setVisibility(View.VISIBLE);
         Toast.makeText(getApplicationContext(),"Unable to fetch the data .check your internet connnection", Toast.LENGTH_LONG).show();
+    }
+
+    public class BuiltBy{
+        public String href;
+
+        public String getHref() {
+            return href;
+        }
+
+        public void setHref(String href) {
+            this.href = href;
+        }
+
+        public String getAvatar() {
+            return avatar;
+        }
+
+        public void setAvatar(String avatar) {
+            this.avatar = avatar;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public String avatar;
+        public String username;
+    }
+
+    public class Root{
+        public String author;
+        public String name;
+
+        public String getAuthor() {
+            return author;
+        }
+
+        public void setAuthor(String author) {
+            this.author = author;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getAvatar() {
+            return avatar;
+        }
+
+        public void setAvatar(String avatar) {
+            this.avatar = avatar;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getLanguage() {
+            return language;
+        }
+
+        public void setLanguage(String language) {
+            this.language = language;
+        }
+
+        public String getLanguageColor() {
+            return languageColor;
+        }
+
+        public void setLanguageColor(String languageColor) {
+            this.languageColor = languageColor;
+        }
+
+        public int getStars() {
+            return stars;
+        }
+
+        public void setStars(int stars) {
+            this.stars = stars;
+        }
+
+        public int getForks() {
+            return forks;
+        }
+
+        public void setForks(int forks) {
+            this.forks = forks;
+        }
+
+        public int getCurrentPeriodStars() {
+            return currentPeriodStars;
+        }
+
+        public void setCurrentPeriodStars(int currentPeriodStars) {
+            this.currentPeriodStars = currentPeriodStars;
+        }
+
+        public List<BuiltBy> getBuiltBy() {
+            return builtBy;
+        }
+
+        public void setBuiltBy(List<BuiltBy> builtBy) {
+            this.builtBy = builtBy;
+        }
+
+        public String avatar;
+        public String url;
+        public String description;
+        public String language;
+        public String languageColor;
+        public int stars;
+        public int forks;
+        public int currentPeriodStars;
+        public List<BuiltBy> builtBy;
     }
 }
