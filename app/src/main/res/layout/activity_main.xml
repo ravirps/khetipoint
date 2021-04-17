@@ -11,11 +11,32 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:id="@+id/progress_circular"
+            android:visibility="gone"
+            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/nointernet_connection"
+            android:id="@+id/errorImage"
+            android:visibility="gone"
+            />
+
         <TextView
             android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Swipe to refresh"
+            android:text="Swipe to redsfresh"
+
             />
         <ListView
             android:id = "@+id/list"
@@ -25,6 +46,8 @@
             android:dividerHeight = "1dp"
             android:footerDividersEnabled = "false"
             android:headerDividersEnabled = "false"/>
+
+        </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </LinearLayout>
