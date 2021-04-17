@@ -1,6 +1,7 @@
 package com.example.ravisde;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.DataSetObserver;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 //import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 class CustomAdapter implements ListAdapter {
     ArrayList<MainActivity.Root> arrayList;
@@ -57,14 +60,34 @@ class CustomAdapter implements ListAdapter {
                 @Override
                 public void onClick(View v) {
 
+                    TextView description=v.findViewById(R.id.description);
+                    if(description.getVisibility()==View.GONE)
+                    description.setVisibility(View.VISIBLE);
+                    else description.setVisibility(View.GONE);
                 }
             });
             TextView author=convertView.findViewById(R.id.author);
             ImageView icon=convertView.findViewById(R.id.icon);
-            author.setText(currElement.author);
-//            Picasso.with(context)
-//                    .load(subjectData.Image)
-//                    .into(imag);
+            TextView name=convertView.findViewById(R.id.name);
+            TextView description=convertView.findViewById(R.id.description);
+            TextView urlLink=convertView.findViewById(R.id.urlLink);
+            author.setText("Author: "+ currElement.author);
+            if(currElement.avatar!=null)
+            Picasso.with(context)
+                    .load(currElement.avatar)
+                    .into(icon);
+            name.setText("Name: " +currElement.name);
+            urlLink.setText("Url: "+currElement.url);
+//            urlLink.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+//                    startActivity(browserIntent);
+//                }
+//            });
+            description.setText(currElement.totext());
+            description.setVisibility(View.GONE);
+
         }
         return convertView;
     }

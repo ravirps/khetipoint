@@ -291,5 +291,18 @@ public class MainActivity extends AppCompatActivity {
         public int forks;
         public int currentPeriodStars;
         public List<BuiltBy> builtBy;
+        public String totext()
+        {
+            String text="";
+            String bb="";
+                    for(int i=0;i<this.builtBy.size();i++)
+                    {
+                        bb.concat(builtBy.get(i)+",    ");
+                    }
+            text="Description= "+this.description+"\n"+"\n"+
+                    "language= "+this.language+"\n"+"\n"+
+                    "buitl by= " +bb;
+            return text;
+        }
     }
 }
